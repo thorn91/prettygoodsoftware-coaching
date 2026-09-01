@@ -167,6 +167,38 @@ const icon = (name: string) =>
       </div>
     </section>
 
+    <!-- ============ NEW: SKELETON ============ -->
+    <section class="pg-new">
+      <div class="pg-new-inner">
+        <figure class="pg-new-shot">
+          <div class="pg-phone">
+            <img
+              src="/img/skeleton.jpg"
+              width="720"
+              height="1280"
+              alt="A back squat at its lowest point, with a mint skeleton drawn over the body: dots at each joint and lines along the limbs."
+            />
+          </div>
+          <figcaption>Real footage, real overlay — bottom of a back squat</figcaption>
+        </figure>
+        <div class="pg-new-copy">
+          <p class="pg-eyebrow">New in this build</p>
+          <h2 class="pg-h2">A skeleton that follows the body.</h2>
+          <p class="pg-new-sub">
+            Switch it on and the app draws the joints and limbs over the footage,
+            live — through slow motion and frame-by-frame. It holds steady rather
+            than blinking, your own marks sit on top of it, and it stays out of
+            the exports until you want it there.
+          </p>
+          <ul class="pg-reqs pg-reqs-dark">
+            <li>Live during playback and stepping</li>
+            <li>One tap on, one tap off</li>
+            <li>Runs on the phone — the clip goes nowhere</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ CAPABILITIES ============ -->
     <section class="pg-caps">
       <div class="pg-caps-head">
@@ -490,6 +522,39 @@ const icon = (name: string) =>
     font-size: 1.4rem;
   }
 
+  /* ---- new: skeleton ---- */
+  .pg-new {
+    background:
+      radial-gradient(90% 70% at 15% 50%, rgba(18, 181, 172, 0.1), transparent 60%),
+      var(--ink);
+    border-top: 1px solid var(--hair-dark);
+    padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem);
+  }
+  .pg-new-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .pg-new-shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .pg-new-shot .pg-phone { width: min(270px, 70vw); }
+  .pg-new-shot figcaption {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--on-dark-mut);
+    text-align: center;
+  }
+  .pg-new-sub {
+    color: var(--on-dark-mut);
+    line-height: 1.65;
+    margin: 1rem 0 0;
+    max-width: 46ch;
+  }
+  .pg-new .pg-reqs li { color: var(--on-dark); }
+
   /* ---- capabilities ---- */
   .pg-caps {
     background: var(--paper);
@@ -721,6 +786,9 @@ const icon = (name: string) =>
     .pg-step-arrow { display: none; }
     .pg-caps-grid { grid-template-columns: 1fr 1fr; }
     .pg-report-inner { grid-template-columns: 1fr; }
+    .pg-new-inner { grid-template-columns: 1fr; }
+    .pg-new-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .pg-new-shot { order: 2; }
     .pg-report-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
     .pg-report-inner .pg-h2 { max-width: none; }
     .pg-install-card { grid-template-columns: 1fr; text-align: center; }
