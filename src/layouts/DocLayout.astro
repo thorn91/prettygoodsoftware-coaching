@@ -1,0 +1,237 @@
+---
+// Shared frame for document pages (/privacy, /support): same paper + dot grid,
+// same header/footer as the marketing page, sized for reading rather than selling.
+import Layout from './Layout.astro';
+import '../styles/pgs-tokens.css';
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title}>
+  <Fragment slot="head">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </Fragment>
+
+  <main class="doc">
+    <div class="doc-dotgrid" aria-hidden="true"></div>
+
+    <header class="doc-head">
+      <a class="doc-brand" href="/">
+        <img src="/img/pgvc-mark-figure.png" width="44" height="44" alt="" />
+        <span>Pretty Good<br />Video Coaching</span>
+      </a>
+      <a class="doc-by" href="https://prettygoodsoftware.llc">by Pretty Good Software</a>
+    </header>
+
+    <div class="doc-inner">
+      <slot />
+    </div>
+
+    <footer class="doc-foot">
+      <div class="doc-foot-brand">
+        <img src="/brand/pgvc-mark.svg" width="28" height="28" alt="" />
+        <span>Pretty Good Video Coaching, a focused tool for physical therapists, in beta.</span>
+      </div>
+      <div class="doc-foot-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/support">Support</a>
+        <a class="doc-foot-by" href="https://prettygoodsoftware.llc">by Pretty Good Software</a>
+      </div>
+    </footer>
+  </main>
+</Layout>
+
+<style is:global>
+  .doc {
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+  .doc * {
+    box-sizing: border-box;
+  }
+
+  .doc-dotgrid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--rule-firm) 1px, transparent 1.3px);
+    background-size: var(--dot-grid-size) var(--dot-grid-size);
+    pointer-events: none;
+  }
+
+  /* ---- header (same as the marketing page) ---- */
+  .doc-head {
+    position: relative;
+    max-width: var(--content-max);
+    width: 100%;
+    margin: 0 auto;
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--rule);
+  }
+  .doc-brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .doc-brand img {
+    border-radius: var(--radius-xs);
+  }
+  .doc-brand span {
+    font: 600 16px/1.02 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .doc-by {
+    margin-left: auto;
+    font: 400 12px/1.45 var(--font-mono);
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+  .doc-by:hover {
+    color: var(--grape-lit);
+  }
+
+  /* ---- reading column ---- */
+  .doc-inner {
+    position: relative;
+    width: min(65ch, 100%);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 2rem) clamp(4rem, 8vw, 6rem);
+    flex: 1;
+  }
+  .doc h1 {
+    font: 600 clamp(2rem, 4.5vw, 2.75rem)/1.05 var(--font-display);
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  .doc .doc-updated {
+    font: 500 11px/1.3 var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin: 0 0 40px;
+  }
+  .doc h2 {
+    font: 600 24px/1.15 var(--font-display);
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 48px 0 12px;
+  }
+  .doc h3 {
+    font: 600 18px/1.25 var(--font-display);
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 28px 0 8px;
+  }
+  .doc p,
+  .doc li {
+    font: 400 18px/1.55 var(--font-body);
+    color: var(--ink);
+  }
+  .doc p {
+    margin: 0 0 18px;
+  }
+  .doc ul {
+    padding-left: 1.2rem;
+    margin: 0 0 18px;
+  }
+  .doc li {
+    margin-bottom: 8px;
+  }
+  .doc li::marker {
+    color: var(--teal-deep);
+  }
+  .doc strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .doc-inner a {
+    color: var(--grape);
+    text-decoration: none;
+    border-bottom: 1px solid var(--lilac);
+  }
+  .doc-inner a:hover {
+    color: var(--grape-lit);
+    border-color: var(--grape-lit);
+  }
+
+  /* ---- footer (same as the marketing page) ---- */
+  .doc-foot {
+    position: relative;
+    max-width: var(--content-max);
+    width: 100%;
+    margin: 0 auto;
+    padding: 36px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-top: 1px solid var(--rule-firm);
+    background: var(--paper-warm);
+  }
+  .doc-foot-brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .doc-foot-brand span {
+    font: 400 16px/1.5 var(--font-body);
+    color: var(--ink-muted);
+  }
+  .doc-foot-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font: 400 12px/1.45 var(--font-mono);
+  }
+  .doc-foot-links a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: none;
+  }
+  .doc-foot-links a:hover {
+    color: var(--grape-lit);
+  }
+  .doc-foot-by {
+    color: var(--grape);
+  }
+  .doc-foot-by:hover {
+    color: var(--grape-lit);
+  }
+
+  @media (max-width: 640px) {
+    .doc-head,
+    .doc-foot {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .doc-by,
+    .doc-foot-links a {
+      transition: none;
+    }
+  }
+</style>
