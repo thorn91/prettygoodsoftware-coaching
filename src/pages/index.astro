@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import '../styles/pgs-tokens.css';
 
 const TESTFLIGHT = 'https://testflight.apple.com/join/D4kfw9zp';
 
@@ -8,13 +9,13 @@ const steps = [
     n: '01',
     title: 'Film the angles',
     body:
-      'Record in-app — front, back, both sides — without leaving the camera between takes. Or pull a clip in from Photos.',
+      'Record in-app, front, back and both sides, without leaving the camera between takes. Or pull a clip in from Photos.',
   },
   {
     n: '02',
     title: 'Talk it through',
     body:
-      'Hit record and work the clip the way you would explain it out loud — scrub back, zoom in, draw on the joint.',
+      'Hit record and work the clip the way you would explain it out loud. Scrub back, zoom in, draw on the joint.',
   },
   {
     n: '03',
@@ -22,6 +23,12 @@ const steps = [
     body:
       'Play the analysis back, share the marked-up clip, or export a PDF of the moments that matter.',
   },
+];
+
+const newBuildReqs = [
+  'Any page, any other moment',
+  'Two camera angles, or two points in one lift',
+  'One cue for both, or one each',
 ];
 
 const capabilities = [
@@ -34,7 +41,7 @@ const capabilities = [
   {
     title: 'Angles that read out degrees',
     body:
-      'Set an angle on the joint or drag a measured line. Nothing snaps to a rounder number — the reading is where you put it.',
+      'Set an angle on the joint or drag a measured line. Nothing snaps to a rounder number. The reading is where you put it.',
     icon: 'angle',
   },
   {
@@ -46,43 +53,67 @@ const capabilities = [
   {
     title: 'Up to four angles per clip',
     body:
-      'Film front, back and both sides in one go. Each angle keeps its own drawings — a knee angle measured side-on does not follow you to the front view.',
+      'Film front, back and both sides in one go. Each angle keeps its own drawings, so a knee angle measured side-on stays on the side view.',
     icon: 'angles',
   },
   {
     title: 'Trim without destroying',
     body:
-      'Cut the settling-in and the slow-down. Nothing is deleted — any cut can be restored later.',
+      'Cut the settling-in and the slow-down. Nothing is deleted, and any cut can be restored later.',
     icon: 'trim',
   },
   {
     title: 'Send a flat video',
     body:
-      'Export the analysis as a plain video — your narration, marks and zoom baked in. No app required to watch it.',
+      'Export the analysis as a plain video with your narration, marks and zoom baked in. No app required to watch it.',
     icon: 'share',
+  },
+  {
+    title: 'A skeleton over the footage',
+    body:
+      'Turn on live joint tracking through slow motion and frame-by-frame. It runs on the phone.',
+    icon: 'skeleton',
   },
 ];
 
-// Small line icons, stroked with currentColor so they inherit the accent.
+const screens = [
+  { src: '/img/recent.jpg', label: 'Recent', cap: 'pick up where you left off', alt: 'The Recent tab listing saved clips with their thumbnails.' },
+  { src: '/img/clients.jpg', label: 'Clients', cap: 'organized by who and what', alt: 'The Clients tab with an Unassigned inbox and a list of clients by injury area.' },
+  { src: '/img/angles.jpg', label: 'Add angle', cap: 'up to four on one clip', alt: 'The player overflow menu open on Add angle, offering Record, From Photos and From Files.' },
+];
+
+const reportReqs = [
+  'US Letter PDF · shares anywhere',
+  'Drawings re-rendered, not screenshotted',
+  'Toggle any moment out before you send',
+];
+
+const installReqs = [
+  'iPhone · iOS 17 or later',
+  'Free during beta',
+  'Feedback goes straight to the developer',
+];
+
+// Small line icons, stroked with currentColor so they inherit the accent (teal deep).
 const ICONS: Record<string, string> = {
   record: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5" fill="currentColor"/>',
   angle: '<path d="M4 20 L20 20"/><path d="M4 20 L16.5 5.5"/><path d="M11 20 a7 7 0 0 0 -2.6 -5.4"/>',
   frame: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M9.5 10 l-2.2 2 2.2 2"/><path d="M14.5 10 l2.2 2 -2.2 2"/>',
-  report: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8 h6"/><path d="M8 12 h8"/><path d="M8 16 h5"/>',
   trim: '<circle cx="6" cy="7" r="2.5"/><circle cx="6" cy="17" r="2.5"/><path d="M8 8.5 L19 16.5"/><path d="M8 15.5 L19 7.5"/>',
   share: '<path d="M12 15 V4"/><path d="M8 8 l4 -4 4 4"/><path d="M5 12 v6 a1 1 0 0 0 1 1 h12 a1 1 0 0 0 1 -1 v-6"/>',
   angles: '<rect x="3" y="7" width="11" height="10" rx="2"/><path d="M17 10 l4 -2.5 v9 L17 14"/><path d="M6.5 4.5 h9"/><path d="M6.5 19.5 h9"/>',
+  skeleton: '<circle cx="12" cy="5" r="1.6"/><path d="M12 6.6 v5.4"/><path d="M12 8 l-4.5 2.5"/><path d="M12 8 l4.5 2.5"/><path d="M12 12 l-3 7"/><path d="M12 12 l3 7"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/>',
 };
 const icon = (name: string) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] ?? ''}</svg>`;
 ---
 
-<Layout title="Pretty Good Video Coaching — movement analysis for PTs">
+<Layout title="Pretty Good Video Coaching, movement analysis for PTs">
   <Fragment slot="head">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Frame-accurate movement analysis for clinicians. Measure joint angles, mark up the fix, and send clients a clip they'll understand — all on your iPhone. Now in TestFlight beta."
+      content="Frame-accurate movement analysis for clinicians. Measure joint angles, mark up the fix, and send clients a clip they'll understand, all on your iPhone. Now in TestFlight beta."
     />
 
     <!-- Link previews (iMessage, Slack, etc). Without these a scraper grabs the
@@ -108,15 +139,20 @@ const icon = (name: string) =>
     />
     <meta name="twitter:image" content="https://coaching.prettygoodsoftware.llc/img/icon.jpg" />
     <link rel="apple-touch-icon" href="/img/icon.jpg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
   </Fragment>
 
   <main class="pg">
+    <div class="pg-dotgrid" aria-hidden="true"></div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="pg-head">
+      <a class="pg-brand" href="/">
+        <img src="/img/pgvc-mark-figure.png" width="44" height="44" alt="" />
+        <span>Pretty Good<br />Video Coaching</span>
+      </a>
+      <a class="pg-by" href="https://prettygoodsoftware.llc">by Pretty Good Software</a>
+    </header>
+
     <!-- ============ HERO ============ -->
     <section class="pg-hero">
       <div class="pg-hero-inner">
@@ -125,9 +161,9 @@ const icon = (name: string) =>
           <h1 class="pg-h1">Pretty Good<br />Video Coaching</h1>
           <p class="pg-lede">Frame-accurate movement analysis for clinicians.</p>
           <p class="pg-sub">
-            Capture a client's movement, then record the whole analysis — your voice,
-            the frame you scrubbed back to, the angle you drew on the joint. They get
-            the explanation, not just the clip.
+            Capture a client's movement, then record the whole analysis: your
+            voice, the frame you scrubbed back to, the angle you drew on the
+            joint. They get the explanation, not just the clip.
           </p>
           <div class="pg-cta-row">
             <a class="pg-btn" href={TESTFLIGHT} target="_blank" rel="noopener">
@@ -138,62 +174,63 @@ const icon = (name: string) =>
         </div>
 
         <!-- Real app screenshot: the player measuring a knee, frame by frame -->
-        <div class="pg-device">
-          <div class="pg-phone">
-            <img
-              src="/img/player.jpg"
-              width="720"
-              height="1565"
-              alt="The player paused on frame 410 of a squat, with a measured line along the barbell reading 1 degree off level."
-            />
+        <figure class="pg-device">
+          <div class="pg-device-frame">
+            <svg class="pg-hero-circles" viewBox="0 0 100 100" aria-hidden="true">
+              <defs><clipPath id="hero-lens"><circle cx="40" cy="60" r="30"></circle></clipPath></defs>
+              <circle cx="40" cy="60" r="30" fill="#4B3A8C"></circle>
+              <circle cx="60" cy="40" r="30" fill="#0E8C86"></circle>
+              <circle cx="60" cy="40" r="30" fill="#04204A" clip-path="url(#hero-lens)"></circle>
+            </svg>
+            <div class="pg-phone">
+              <img
+                src="/img/player.jpg"
+                width="720"
+                height="1565"
+                alt="The player paused on frame 410 of a squat, with a measured line along the barbell reading 1 degree off level."
+              />
+            </div>
           </div>
-          <span class="pg-device-cap">Frame 410 / 627 · bar 1° off level</span>
-        </div>
+          <figcaption>Frame 410 / 627 · bar 1° off level</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- ============ HOW IT WORKS ============ -->
+    <!-- ============ THE SESSION, END TO END ============ -->
     <section class="pg-steps">
-      <p class="pg-eyebrow pg-eyebrow-c">The session, end to end</p>
+      <p class="pg-eyebrow">The session, end to end</p>
       <div class="pg-steps-grid">
-        {steps.map((s, i) => (
+        {steps.map((s) => (
           <div class="pg-step">
             <span class="pg-step-n">{s.n}</span>
             <h3 class="pg-step-t">{s.title}</h3>
             <p class="pg-step-b">{s.body}</p>
-            {i < steps.length - 1 && <span class="pg-step-arrow" aria-hidden="true">→</span>}
           </div>
         ))}
       </div>
     </section>
 
-    <!-- ============ NEW: SKELETON ============ -->
+    <!-- ============ NEW IN THIS BUILD ============ -->
     <section class="pg-new">
       <div class="pg-new-inner">
         <figure class="pg-new-shot">
-          <div class="pg-phone">
-            <img
-              src="/img/skeleton.jpg"
-              width="720"
-              height="1280"
-              alt="A back squat at its lowest point, with a mint skeleton drawn over the body: dots at each joint and lines along the limbs."
-            />
-          </div>
-          <figcaption>Real footage, real overlay — bottom of a back squat</figcaption>
+          <img
+            src="/img/report-pairs.jpg"
+            width="900"
+            height="1165"
+            alt="A report page showing two stills of a back squat side by side, standing and at the bottom, each with its own timecode and coaching cue underneath."
+          />
+          <figcaption>An actual page, exported from the app</figcaption>
         </figure>
         <div class="pg-new-copy">
           <p class="pg-eyebrow">New in this build</p>
-          <h2 class="pg-h2">A skeleton that follows the body.</h2>
+          <h2 class="pg-h2">Two moments, one page.</h2>
           <p class="pg-new-sub">
-            Switch it on and the app draws the joints and limbs over the footage,
-            live — through slow motion and frame-by-frame. It holds steady rather
-            than blinking, your own marks sit on top of it, and it stays out of
-            the exports until you want it there.
+            Put a second moment beside any report page: another point in the
+            same lift, or another camera on the same moment.
           </p>
-          <ul class="pg-reqs pg-reqs-dark">
-            <li>Live during playback and stepping</li>
-            <li>One tap on, one tap off</li>
-            <li>Runs on the phone — the clip goes nowhere</li>
+          <ul class="pg-reqs pg-reqs-new">
+            {newBuildReqs.map((r) => <li>{r}</li>)}
           </ul>
         </div>
       </div>
@@ -201,10 +238,8 @@ const icon = (name: string) =>
 
     <!-- ============ CAPABILITIES ============ -->
     <section class="pg-caps">
-      <div class="pg-caps-head">
-        <p class="pg-eyebrow">Built around the measurement</p>
-        <h2 class="pg-h2">The tools a movement assessment actually needs.</h2>
-      </div>
+      <p class="pg-eyebrow">Around the measurement</p>
+      <h2 class="pg-h2 pg-caps-h2">The tools a movement assessment needs.</h2>
       <div class="pg-caps-grid">
         {capabilities.map((c) => (
           <article class="pg-cap">
@@ -216,30 +251,25 @@ const icon = (name: string) =>
       </div>
     </section>
 
-    <!-- ============ REAL SCREENS ============ -->
+    <!-- ============ ON YOUR IPHONE ============ -->
     <section class="pg-screens">
       <div class="pg-screens-head">
         <p class="pg-eyebrow">On your iPhone</p>
         <h2 class="pg-h2">Every clip, filed under the right client.</h2>
         <p class="pg-screens-sub">
-          Shoot into a client from the camera, or drop clips in Unassigned and sort
-          them later. One clip holds up to four angles of the same movement, each
-          keeping its own drawings. No folders to manage, no accounts to set up.
+          Shoot into a client from the camera, or drop clips in Unassigned and
+          sort them later. One clip holds up to four angles of the same
+          movement, each keeping its own drawings. No folders to manage, no
+          accounts to set up.
         </p>
       </div>
       <div class="pg-screens-row">
-        <figure class="pg-shot">
-          <div class="pg-phone"><img src="/img/recent.jpg" width="640" height="1391" alt="The Recent tab listing saved clips with their thumbnails." /></div>
-          <figcaption>Recent — pick up where you left off</figcaption>
-        </figure>
-        <figure class="pg-shot">
-          <div class="pg-phone"><img src="/img/clients.jpg" width="640" height="1391" alt="The Clients tab with an Unassigned inbox and a list of clients by injury area." /></div>
-          <figcaption>Clients — organized by who and what</figcaption>
-        </figure>
-        <figure class="pg-shot">
-          <div class="pg-phone"><img src="/img/angles.jpg" width="640" height="1391" alt="The player's overflow menu open on Add angle, offering Record, From Photos and From Files." /></div>
-          <figcaption>Add angle — up to four on one clip</figcaption>
-        </figure>
+        {screens.map((p) => (
+          <figure class="pg-shot">
+            <div class="pg-phone"><img src={p.src} width="640" height="1391" alt={p.alt} /></div>
+            <figcaption><span class="pg-shot-label">{p.label}</span>{p.cap}</figcaption>
+          </figure>
+        ))}
       </div>
     </section>
 
@@ -250,15 +280,14 @@ const icon = (name: string) =>
           <p class="pg-eyebrow">The thing you hand over</p>
           <h2 class="pg-h2">A PDF they can read without the app.</h2>
           <p class="pg-report-sub">
-            Step to a frame, tap <strong>+</strong>, and write what they should
-            notice. The report prints each moment with its timecode, your note, and
-            the still — re-rendered at print resolution with your marks drawn back
-            in as vectors, not a screenshot of your phone.
+            Step to a frame, tap <strong>+</strong>, and write what they
+            should notice. The report prints each moment with its timecode,
+            your note and the still, re-rendered at print resolution with
+            your marks drawn back in as vectors, not a screenshot of your
+            phone.
           </p>
-          <ul class="pg-reqs pg-reqs-dark">
-            <li>US Letter PDF · shares anywhere</li>
-            <li>Drawings re-rendered, not screenshotted</li>
-            <li>Toggle any moment out before you send</li>
+          <ul class="pg-reqs pg-reqs-report">
+            {reportReqs.map((r) => <li>{r}</li>)}
           </ul>
         </div>
         <figure class="pg-page">
@@ -268,17 +297,17 @@ const icon = (name: string) =>
       </div>
       <figure class="pg-builder">
         <div class="pg-phone"><img src="/img/builder.jpg" width="640" height="1391" alt="The Build report sheet listing two marked moments with thumbnails, timecodes, include switches and note text." /></div>
-        <figcaption>Where you write it — moments, cues, and what makes the cut</figcaption>
+        <figcaption>Where you write it: moments, cues, and what makes the cut</figcaption>
       </figure>
     </section>
 
-    <!-- ============ PRIVACY BAND ============ -->
+    <!-- ============ CLIENT PRIVACY ============ -->
     <section class="pg-priv">
-      <p class="pg-eyebrow pg-eyebrow-c">Built for client privacy</p>
-      <p class="pg-priv-line">
-        No accounts. No cloud. No sign-in.<br />
-        <span>Every clip, drawing, and voice note stays on your iPhone —
-        nothing about your clients leaves the device.</span>
+      <p class="pg-eyebrow pg-priv-eyebrow">Client privacy</p>
+      <p class="pg-priv-line">No accounts. No cloud. No sign-in.</p>
+      <p class="pg-priv-sub">
+        Clips, drawings and voice notes stay on your iPhone. Nothing about
+        your clients leaves the device.
       </p>
     </section>
 
@@ -287,29 +316,29 @@ const icon = (name: string) =>
       <div class="pg-install-card">
         <div class="pg-install-copy">
           <p class="pg-eyebrow">Now testing</p>
-          <h2 class="pg-h2 pg-h2-dark">Join the TestFlight beta</h2>
+          <h2 class="pg-h2 pg-install-h2">Join the TestFlight beta</h2>
           <p class="pg-install-sub">
-            Scan the code and the app is yours. If it asks you to install Apple
-            TestFlight first, install it and then <strong>scan again</strong> —
-            opening TestFlight straight from the App Store skips the invite.
+            Scan the code and the app is yours. If it asks you to install
+            Apple TestFlight first, install it and then
+            <strong>scan again</strong>. Opening TestFlight straight from the
+            App Store skips the invite.
           </p>
-          <ul class="pg-reqs">
-            <li>iPhone · iOS 17 or later</li>
-            <li>Free during beta</li>
-            <li>Feedback goes straight to the developer</li>
+          <ul class="pg-reqs pg-reqs-install">
+            {installReqs.map((r) => <li>{r}</li>)}
           </ul>
           <a class="pg-link" href={TESTFLIGHT} target="_blank" rel="noopener"
             >testflight.apple.com/join/D4kfw9zp</a
           >
           <p class="pg-note">
-            Sorry about the extra hop. This is a deliberately small beta, so it runs
-            through TestFlight rather than the App Store — I'd rather have a handful
-            of clinicians I can actually talk to than a download count.
+            Sorry about the extra hop. This is a deliberately small beta, so
+            it runs through TestFlight rather than the App Store. I'd rather
+            have a handful of clinicians I can actually talk to than a
+            download count.
           </p>
         </div>
         <a class="pg-qr" href={TESTFLIGHT} target="_blank" rel="noopener" aria-label="Scan to join the TestFlight beta">
-          <div class="pg-qr-svg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 390"><g transform="scale(10)"><path fill="#fff" d="M0 0h39v39h-39z"/><path stroke="#0f172a" d="M3 3.5h7m4 0h1m1 0h1m1 0h1m3 0h2m2 0h1m2 0h7m-33 1h1m5 0h1m1 0h1m3 0h3m1 0h2m2 0h2m1 0h1m2 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h3m1 0h3m1 0h1m1 0h2m3 0h2m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m4 0h1m1 0h2m3 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h5m1 0h2m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m3 0h2m1 0h1m1 0h1m10 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-23 1h1m3 0h4m1 0h1m3 0h2m-24 1h3m1 0h2m4 0h3m1 0h1m1 0h2m1 0h2m8 0h2m-29 1h1m5 0h1m7 0h5m1 0h1m2 0h2m1 0h2m1 0h1m-31 1h1m3 0h3m1 0h1m1 0h3m1 0h1m1 0h1m2 0h3m1 0h1m1 0h3m1 0h2m-32 1h1m2 0h1m3 0h2m4 0h4m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h2m-33 1h1m2 0h2m1 0h1m1 0h1m1 0h1m1 0h2m8 0h1m2 0h1m1 0h3m1 0h2m-32 1h1m9 0h3m2 0h2m2 0h3m4 0h1m1 0h1m1 0h1m-32 1h3m3 0h2m1 0h3m1 0h1m1 0h1m2 0h2m2 0h1m3 0h1m2 0h2m-30 1h5m1 0h1m2 0h3m1 0h5m2 0h2m2 0h6m-29 1h1m1 0h1m1 0h1m2 0h6m1 0h1m3 0h7m1 0h3m-27 1h2m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h2m1 0h2m-33 1h1m1 0h1m3 0h1m6 0h2m1 0h1m5 0h1m3 0h3m1 0h1m-30 1h5m1 0h2m10 0h1m2 0h1m2 0h2m1 0h1m2 0h2m-33 1h3m1 0h1m1 0h1m1 0h1m2 0h3m4 0h1m2 0h2m6 0h2m-31 1h2m3 0h1m1 0h1m1 0h2m10 0h2m3 0h1m2 0h1m2 0h1m-30 1h5m4 0h2m4 0h1m1 0h9m1 0h3m-32 1h1m2 0h2m2 0h1m2 0h1m3 0h2m1 0h2m3 0h3m1 0h1m1 0h1m1 0h2m-33 1h1m2 0h1m2 0h3m3 0h2m3 0h1m4 0h7m3 0h1m-25 1h4m3 0h3m1 0h3m2 0h1m3 0h2m-30 1h7m3 0h2m1 0h4m1 0h2m2 0h3m1 0h1m1 0h1m-29 1h1m5 0h1m1 0h1m2 0h3m1 0h1m2 0h1m1 0h5m3 0h3m-31 1h1m1 0h3m1 0h1m4 0h3m1 0h1m1 0h2m2 0h8m1 0h2m-32 1h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m3 0h2m1 0h1m3 0h1m1 0h4m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h4m3 0h1m1 0h2m1 0h2m1 0h2m-31 1h1m5 0h1m1 0h3m1 0h1m2 0h2m1 0h3m2 0h3m1 0h3m2 0h1m-33 1h7m4 0h5m1 0h1m2 0h2m3 0h2m1 0h1m1 0h1"/></g></svg>
+          <div class="pg-qr-card">
+            <img src="/img/testflight-qr.svg" width="192" height="192" alt="" />
           </div>
           <span class="pg-qr-cap">Point your camera here</span>
           <span class="pg-qr-cap pg-qr-note">Just installed TestFlight? Scan again.</span>
@@ -319,489 +348,499 @@ const icon = (name: string) =>
 
     <!-- ============ FOOTER ============ -->
     <footer class="pg-foot">
-      <p>Pretty Good Video Coaching — a focused tool for physical therapists, in beta.</p>
-      <p>Built by <a href="mailto:thomas@thomashorn.info">Thomas Horn</a></p>
+      <div class="pg-foot-brand">
+        <img src="/brand/pgvc-mark.svg" width="28" height="28" alt="" />
+        <span>Pretty Good Video Coaching, a focused tool for physical therapists, in beta.</span>
+      </div>
+      <div class="pg-foot-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/support">Support</a>
+        <a class="pg-foot-by" href="https://prettygoodsoftware.llc">by Pretty Good Software</a>
+      </div>
     </footer>
   </main>
 </Layout>
 
 <style>
-  /* ---- tokens ---- */
   .pg {
-    --ink: #0a1017;
-    --ink-2: #0e1620;
-    --paper: #edf1f2;
-    --paper-2: #ffffff;
-    --teal: #12b5ac;
-    --amber: #f0a83c;
-    --on-dark: #f3f6f8;
-    --on-dark-mut: #9fb0bc;
-    --on-light: #0a1017;
-    --on-light-mut: #4a5a66;
-    --hair-dark: #1d2a34;
-    --hair-light: #d5dde1;
-
-    --display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-    --body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
-
-    font-family: var(--body);
-    color: var(--on-dark);
-    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--paper);
     -webkit-font-smoothing: antialiased;
   }
   .pg * { box-sizing: border-box; }
 
+  .pg-dotgrid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--rule-firm) 1px, transparent 1.3px);
+    background-size: var(--dot-grid-size) var(--dot-grid-size);
+    pointer-events: none;
+  }
+
   /* ---- shared type ---- */
   .pg-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
+    font: 500 11px/1.3 var(--font-mono);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--teal);
-    margin: 0 0 1.1rem;
+    color: var(--teal-deep);
+    margin: 0 0 18px;
   }
-  .pg-eyebrow-c { text-align: center; }
   .pg-h1 {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: clamp(2.5rem, 6vw, 4.35rem);
-    line-height: 0.98;
-    letter-spacing: -0.02em;
+    font: 600 clamp(2.5rem, 6vw, 4.5rem)/0.98 var(--font-display);
+    letter-spacing: -0.03em;
     margin: 0;
   }
   .pg-h2 {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: clamp(1.7rem, 3.4vw, 2.5rem);
-    line-height: 1.06;
-    letter-spacing: -0.015em;
+    font: 600 clamp(1.7rem, 3.4vw, 2.75rem)/1.05 var(--font-display);
+    letter-spacing: -0.025em;
     margin: 0;
-    max-width: 16ch;
+    max-width: 18ch;
   }
-  .pg-h2-dark { color: var(--on-light); }
 
   /* ---- buttons ---- */
-  .pg-cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2.2rem; }
+  .pg-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: var(--space-6); }
   .pg-btn {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1rem;
-    background: var(--teal);
-    color: #04110f;
-    padding: 0.85rem 1.6rem;
-    border-radius: 999px;
+    font: 600 16px/1 var(--font-display);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 22px;
+    border-radius: var(--radius-s);
     text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    box-shadow: 0 8px 30px -12px rgba(18, 181, 172, 0.7);
+    transition: background 160ms ease-out;
   }
-  .pg-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px -12px rgba(18, 181, 172, 0.8); }
+  .pg-btn:hover { background: var(--overprint-teal); }
+  .pg-btn:active { transform: translateY(1px); }
   .pg-btn-ghost {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: 1rem;
-    color: var(--on-dark);
-    padding: 0.85rem 1.4rem;
-    border-radius: 999px;
-    border: 1px solid #2a3945;
+    font: 600 16px/1 var(--font-display);
+    color: var(--ink);
+    padding: 14px 20px;
+    border-radius: var(--radius-s);
+    border: 1px solid var(--rule-firm);
     text-decoration: none;
-    transition: border-color 0.15s ease, color 0.15s ease;
+    transition: border-color 160ms ease-out;
   }
-  .pg-btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+  .pg-btn-ghost:hover { border-color: var(--ink); }
+
+  /* ---- header ---- */
+  .pg-head {
+    position: relative;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pg-brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .pg-brand img { border-radius: var(--radius-xs); }
+  .pg-brand span {
+    font: 600 16px/1.02 var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .pg-by {
+    margin-left: auto;
+    font: 400 12px/1.45 var(--font-mono);
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+  .pg-by:hover { color: var(--grape-lit); }
 
   /* ---- hero ---- */
   .pg-hero {
-    background:
-      radial-gradient(120% 80% at 85% 10%, rgba(18, 181, 172, 0.12), transparent 55%),
-      var(--ink);
-    padding: clamp(3.5rem, 8vw, 7rem) clamp(1.25rem, 5vw, 5rem) clamp(3rem, 6vw, 5.5rem);
-  }
-  .pg-hero-inner {
-    max-width: 1120px;
+    position: relative;
+    max-width: var(--content-max);
     margin: 0 auto;
+    padding: clamp(3.5rem, 8vw, 88px) 32px clamp(3rem, 8vw, 104px);
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: clamp(2rem, 5vw, 4.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: clamp(2rem, 5vw, 64px);
     align-items: center;
   }
+  .pg-hero-inner { display: contents; }
+  .pg-hero-copy { display: flex; flex-direction: column; }
   .pg-lede {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: clamp(1.15rem, 2.1vw, 1.5rem);
-    color: var(--teal);
-    margin: 1.5rem 0 0;
+    font: 600 23px/1.3 var(--font-display);
+    letter-spacing: -0.01em;
+    color: var(--teal-deep);
+    margin: var(--space-5) 0 0;
   }
   .pg-sub {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    color: var(--on-dark-mut);
-    max-width: 42ch;
-    margin: 1rem 0 0;
+    font: 400 19px/1.55 var(--font-body);
+    color: var(--ink-muted);
+    max-width: 44ch;
+    margin: var(--space-4) 0 0;
+    text-wrap: pretty;
   }
 
   /* ---- device (real screenshots in a phone frame) ---- */
-  .pg-device { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .pg-device { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .pg-device-frame { position: relative; display: flex; justify-content: center; width: 100%; }
+  .pg-hero-circles {
+    position: absolute;
+    width: min(560px, 130%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   .pg-phone {
+    position: relative;
     width: min(290px, 76vw);
-    background: #05070a;
+    background: var(--ink);
     padding: 8px;
-    border-radius: 46px;
-    box-shadow: 0 50px 90px -34px rgba(0, 0, 0, 0.65), inset 0 0 0 1px #232b33;
+    border-radius: var(--radius-phone);
   }
   .pg-phone img { display: block; width: 100%; height: auto; border-radius: 38px; }
-  .pg-device-cap {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    color: var(--on-dark-mut);
-  }
-  .pg-rise { opacity: 0; transform: translateY(16px); animation: pg-rise 0.7s 0.1s ease-out forwards; }
-  @keyframes pg-rise { to { opacity: 1; transform: none; } }
-
-  /* ---- real screens showcase ---- */
-  .pg-screens {
-    background: var(--paper);
-    color: var(--on-light);
-    padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem);
-    border-top: 1px solid var(--hair-light);
-  }
-  .pg-screens .pg-eyebrow { color: #0c8e87; }
-  .pg-screens-head { max-width: 640px; margin: 0 auto; text-align: center; }
-  .pg-screens-head .pg-h2 { max-width: none; margin: 0 auto; }
-  .pg-screens-sub { color: var(--on-light-mut); line-height: 1.6; margin: 1rem auto 0; max-width: 52ch; }
-  .pg-screens-row {
-    display: flex;
-    justify-content: center;
-    gap: clamp(1.5rem, 5vw, 4rem);
-    margin-top: 3rem;
-    flex-wrap: wrap;
-  }
-  .pg-shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-  .pg-shot .pg-phone { width: min(240px, 62vw); box-shadow: 0 30px 60px -34px rgba(10, 16, 23, 0.5), inset 0 0 0 1px #232b33; }
-  .pg-shot figcaption {
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
-    color: var(--on-light-mut);
-    text-align: center;
+  .pg-device figcaption {
+    font: 400 12px/1.45 var(--font-mono);
+    color: var(--ink-muted);
   }
 
-  /* ---- steps ---- */
+  /* ---- the session, end to end ---- */
   .pg-steps {
-    background: var(--ink-2);
-    border-top: 1px solid var(--hair-dark);
-    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 5rem);
+    position: relative;
+    border-top: 1px solid var(--rule);
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 72px 32px 88px;
   }
   .pg-steps-grid {
-    max-width: 1120px;
-    margin: 1.5rem auto 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.5rem, 4vw, 3rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 20px;
+    margin-top: 36px;
   }
-  .pg-step { position: relative; }
-  .pg-step-n {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--amber);
-    letter-spacing: 0.1em;
+  .pg-step {
+    background: var(--paper-lit);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-m);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-  .pg-step-t {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1.3rem;
-    margin: 0.55rem 0 0.5rem;
-    color: var(--on-dark);
-  }
-  .pg-step-b { color: var(--on-dark-mut); line-height: 1.55; margin: 0; font-size: 0.98rem; }
-  .pg-step-arrow {
-    position: absolute;
-    right: clamp(-1.6rem, -2vw, -0.9rem);
-    top: 0;
-    color: #33454f;
-    font-size: 1.4rem;
-  }
+  .pg-step-n { font: 500 15px/1.4 var(--font-mono); color: var(--teal-deep); }
+  .pg-step-t { font: 600 24px/1.15 var(--font-display); letter-spacing: -0.015em; margin: 0; }
+  .pg-step-b { font: 400 17px/1.55 var(--font-body); color: var(--ink-muted); margin: 0; text-wrap: pretty; }
 
-  /* ---- new: skeleton ---- */
+  /* ---- new in this build ---- */
   .pg-new {
-    background:
-      radial-gradient(90% 70% at 15% 50%, rgba(18, 181, 172, 0.1), transparent 60%),
-      var(--ink);
-    border-top: 1px solid var(--hair-dark);
-    padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem);
+    position: relative;
+    background: var(--teal-soft);
+    border-top: 1px solid var(--teal);
+    border-bottom: 1px solid var(--teal);
   }
   .pg-new-inner {
-    max-width: 1120px;
+    max-width: var(--content-max);
     margin: 0 auto;
+    padding: 88px 32px;
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: clamp(2rem, 5vw, 4.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: clamp(2rem, 5vw, 64px);
     align-items: center;
   }
-  .pg-new-shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-  .pg-new-shot .pg-phone { width: min(270px, 70vw); }
-  .pg-new-shot figcaption {
-    font-family: var(--mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.04em;
-    color: var(--on-dark-mut);
-    text-align: center;
+  .pg-new-shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .pg-new-shot img {
+    width: min(400px, 100%);
+    height: auto;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--teal);
   }
-  .pg-new-sub {
-    color: var(--on-dark-mut);
-    line-height: 1.65;
-    margin: 1rem 0 0;
-    max-width: 46ch;
+  .pg-new-shot figcaption { font: 400 12px/1.45 var(--font-mono); color: var(--overprint-teal); }
+  .pg-new-copy { display: flex; flex-direction: column; color: var(--overprint-teal); }
+  .pg-new-copy .pg-eyebrow { color: inherit; }
+  .pg-new-sub { font: 400 19px/1.55 var(--font-body); max-width: 44ch; margin: var(--space-4) 0 0; text-wrap: pretty; }
+
+  /* ---- shared "reqs" bullet lists ---- */
+  .pg-reqs {
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 0;
+    display: flex;
+    flex-direction: column;
   }
-  .pg-new .pg-reqs li { color: var(--on-dark); }
+  .pg-reqs li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    font: 500 14px/1.4 var(--font-mono);
+  }
+  .pg-reqs li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-xs);
+    flex: none;
+  }
+  .pg-reqs-new li { border-top: 1px solid var(--teal); }
+  .pg-reqs-new li::before { background: var(--overprint-teal); }
+  .pg-reqs-report li,
+  .pg-reqs-install li { border-top: 1px solid var(--rule); color: var(--ink); }
+  .pg-reqs-report li::before,
+  .pg-reqs-install li::before { background: var(--teal); }
 
   /* ---- capabilities ---- */
   .pg-caps {
-    background: var(--paper);
-    color: var(--on-light);
-    padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem);
+    position: relative;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 104px 32px 88px;
   }
-  .pg-caps-head { max-width: 1120px; margin: 0 auto; }
-  .pg-caps .pg-eyebrow { color: #0c8e87; }
+  .pg-caps-h2 { max-width: 18ch; }
   .pg-caps-grid {
-    max-width: 1120px;
-    margin: 2.5rem auto 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--hair-light);
-    border: 1px solid var(--hair-light);
-    border-radius: 16px;
-    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 0 40px;
+    margin-top: var(--space-7);
+    border-top: 1.5px solid var(--ink);
   }
-  .pg-cap { background: var(--paper-2); padding: 1.8rem 1.6rem; }
-  .pg-cap-ico { display: block; color: var(--teal); margin-bottom: 1rem; }
-  .pg-cap-ico :global(svg) { width: 30px; height: 30px; }
-  .pg-cap-t {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 1.12rem;
-    margin: 0 0 0.4rem;
-    color: var(--on-light);
+  .pg-cap {
+    padding: 28px 0 32px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .pg-cap-b { color: var(--on-light-mut); line-height: 1.55; margin: 0; font-size: 0.95rem; }
+  .pg-cap-ico { display: block; color: var(--teal-deep); }
+  .pg-cap-ico :global(svg) { width: 28px; height: 28px; }
+  .pg-cap-t { font: 600 20px/1.25 var(--font-display); margin: 6px 0 0; }
+  .pg-cap-b { font: 400 17px/1.55 var(--font-body); color: var(--ink-muted); margin: 0; text-wrap: pretty; }
+
+  /* ---- on your iphone ---- */
+  .pg-screens {
+    position: relative;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 40px 32px 112px;
+  }
+  .pg-screens-head { max-width: 640px; }
+  .pg-screens-sub { font: 400 19px/1.55 var(--font-body); color: var(--ink-muted); margin: var(--space-4) 0 0; text-wrap: pretty; }
+  .pg-screens-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    margin-top: 56px;
+    justify-content: center;
+  }
+  .pg-shot { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .pg-shot .pg-phone { width: min(240px, 62vw); }
+  .pg-shot figcaption {
+    display: flex;
+    gap: 8px;
+    font: 400 12px/1.45 var(--font-mono);
+    color: var(--ink-muted);
+  }
+  .pg-shot-label { color: var(--ink); font-weight: 500; }
 
   /* ---- the report ---- */
   .pg-report {
-    background: var(--ink-2);
-    border-top: 1px solid var(--hair-dark);
-    padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem);
+    position: relative;
+    border-top: 1px solid var(--rule);
+    background: var(--paper-warm);
   }
   .pg-report-inner {
-    max-width: 1120px;
+    max-width: var(--content-max);
     margin: 0 auto;
+    padding: 104px 32px 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: clamp(2rem, 5vw, 64px);
     align-items: center;
   }
+  .pg-report-copy { display: flex; flex-direction: column; }
   .pg-report-sub {
-    color: var(--on-dark-mut);
-    line-height: 1.65;
-    margin: 1rem 0 0;
+    font: 400 19px/1.55 var(--font-body);
+    color: var(--ink-muted);
     max-width: 46ch;
+    margin: var(--space-4) 0 0;
+    text-wrap: pretty;
   }
-  .pg-report-sub strong { color: var(--on-dark); font-weight: 600; }
-  /* Wins over `.pg-reqs li`, which sets the light-background ink further down. */
-  .pg-report .pg-reqs li { color: var(--on-dark); }
-  .pg-page { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+  .pg-report-sub strong { color: var(--ink); font-weight: 600; }
+  .pg-page { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .pg-page img {
     display: block;
     width: min(420px, 100%);
     height: auto;
-    border-radius: 4px;
-    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--rule-firm);
   }
   .pg-page figcaption,
   .pg-builder figcaption {
-    font-family: var(--mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.04em;
-    color: var(--on-dark-mut);
+    font: 400 12px/1.45 var(--font-mono);
+    color: var(--ink-muted);
     text-align: center;
   }
   .pg-builder {
-    max-width: 1120px;
-    margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 72px 32px 104px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.9rem;
+    gap: 14px;
   }
   .pg-builder .pg-phone { width: min(250px, 64vw); }
 
-  /* ---- privacy ---- */
+  /* ---- client privacy ---- */
   .pg-priv {
-    background: var(--ink);
-    padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 5rem);
+    position: relative;
+    background: var(--grape);
+    color: var(--paper);
+    padding: 96px 32px;
     text-align: center;
-    border-top: 1px solid var(--hair-dark);
-  }
-  .pg-priv-line {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: clamp(1.6rem, 3.6vw, 2.6rem);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
-    max-width: 20ch;
+    max-width: 760px;
     margin: 0 auto;
-    color: var(--on-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
   }
-  .pg-priv-line span {
-    display: block;
-    font-family: var(--body);
-    font-weight: 400;
-    font-size: clamp(1rem, 1.8vw, 1.15rem);
-    color: var(--on-dark-mut);
-    line-height: 1.55;
-    margin-top: 1.1rem;
-    letter-spacing: 0;
+  .pg-priv-eyebrow { color: var(--lilac); margin: 0; }
+  .pg-priv-line {
+    font: 600 40px/1.15 var(--font-display);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .pg-priv-sub {
+    font: 400 19px/1.55 var(--font-body);
+    color: #e4dcf7;
+    max-width: 46ch;
+    margin: 0;
   }
 
   /* ---- install / QR ---- */
   .pg-install {
-    background: var(--paper);
-    padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 5vw, 5rem);
-  }
-  .pg-install-card {
+    position: relative;
     max-width: 1000px;
     margin: 0 auto;
-    background: var(--paper-2);
-    border: 1px solid var(--hair-light);
-    border-radius: 22px;
-    padding: clamp(2rem, 4vw, 3.5rem);
+    padding: 104px 32px;
+  }
+  .pg-install-card {
+    background: var(--paper-lit);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-l);
+    padding: 48px;
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: clamp(2rem, 4vw, 3.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 48px;
     align-items: center;
-    box-shadow: 0 30px 60px -40px rgba(10, 16, 23, 0.4);
   }
-  .pg-install .pg-eyebrow { color: #0c8e87; }
+  .pg-install-copy { display: flex; flex-direction: column; }
+  .pg-install-h2 { font-size: clamp(1.6rem, 3.4vw, 2.5rem); line-height: 1.08; }
   .pg-install-sub {
-    color: var(--on-light-mut);
-    line-height: 1.6;
-    margin: 1rem 0 0;
+    font: 400 18px/1.55 var(--font-body);
+    color: var(--ink-muted);
     max-width: 42ch;
+    margin: var(--space-4) 0 0;
+    text-wrap: pretty;
   }
-  .pg-reqs {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 1.5rem;
-    display: grid;
-    gap: 0.5rem;
-  }
-  .pg-reqs li {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--on-light);
-    padding-left: 1.4rem;
-    position: relative;
-  }
-  .pg-reqs li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.45em;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--teal);
-  }
+  .pg-install-sub strong { color: var(--ink); font-weight: 600; }
+  .pg-reqs-install { margin: var(--space-5) 0; }
   .pg-link {
-    font-family: var(--mono);
-    font-size: 0.9rem;
-    color: #0c8e87;
+    align-self: flex-start;
+    font: 500 15px/1.4 var(--font-mono);
+    color: var(--teal-deep);
     text-decoration: none;
-    border-bottom: 1px solid #b7dedb;
+    border-bottom: 1px solid var(--teal-soft);
     padding-bottom: 2px;
   }
-  .pg-link:hover { border-color: var(--teal); }
+  .pg-link:hover { border-color: var(--teal-deep); }
   .pg-note {
-    margin: 1.4rem 0 0;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--on-light-mut);
+    margin: var(--space-6) 0 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font: 400 16px/1.55 var(--font-body);
+    color: var(--ink-muted);
     max-width: 46ch;
-    padding-top: 1.1rem;
-    border-top: 1px solid var(--hair-light);
   }
   .pg-qr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem;
+    gap: 10px;
     text-decoration: none;
   }
-  .pg-qr-svg {
+  .pg-qr-card {
     width: min(220px, 60vw);
     padding: 14px;
-    background: #fff;
-    border: 1px solid var(--hair-light);
-    border-radius: 16px;
-    box-shadow: 0 12px 30px -18px rgba(10, 16, 23, 0.5);
+    background: var(--paper-lit);
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius-m);
   }
-  .pg-qr-svg svg { display: block; width: 100%; height: auto; }
+  .pg-qr-card img { display: block; width: 100%; height: auto; }
   .pg-qr-cap {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font: 500 11px/1.3 var(--font-mono);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--on-light-mut);
+    color: var(--ink-muted);
     text-align: center;
   }
-  /* The rescue line, not a label — set it quieter than the caption above it. */
   .pg-qr-note {
     text-transform: none;
     letter-spacing: 0;
-    font-size: 0.78rem;
-    margin-top: -0.35rem;
-    color: #6b7a86;
+    font: 400 12px/1.45 var(--font-mono);
+    margin-top: -6px;
+    color: var(--ink-muted-soft);
   }
 
   /* ---- footer ---- */
   .pg-foot {
-    background: var(--ink);
-    border-top: 1px solid var(--hair-dark);
-    padding: 2.5rem clamp(1.25rem, 5vw, 5rem);
+    position: relative;
+    border-top: 1px solid var(--rule-firm);
+    background: var(--paper-warm);
+  }
+  .pg-foot {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 36px 32px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 20px;
   }
-  .pg-foot p { margin: 0; color: #5b6b78; font-size: 0.88rem; }
-  .pg-foot a { color: var(--on-dark-mut); text-decoration: none; border-bottom: 1px solid #2a3945; }
-  .pg-foot a:hover { color: var(--teal); }
+  .pg-foot-brand { display: flex; gap: 12px; align-items: center; }
+  .pg-foot-brand span { font: 400 16px/1.5 var(--font-body); color: var(--ink-muted); }
+  .pg-foot-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font: 400 12px/1.45 var(--font-mono);
+  }
+  .pg-foot-links a { color: var(--ink-muted); text-decoration: none; }
+  .pg-foot-links a:hover { color: var(--grape-lit); }
+  .pg-foot-by { color: var(--grape); }
+  .pg-foot-by:hover { color: var(--grape-lit); }
 
   /* ---- responsive ---- */
   @media (max-width: 900px) {
-    .pg-hero-inner { grid-template-columns: 1fr; }
     .pg-hero-copy { order: 1; }
     .pg-device { order: 2; }
-    .pg-steps-grid { grid-template-columns: 1fr; gap: 1.75rem; }
-    .pg-step-arrow { display: none; }
-    .pg-caps-grid { grid-template-columns: 1fr 1fr; }
-    .pg-report-inner { grid-template-columns: 1fr; }
     .pg-new-inner { grid-template-columns: 1fr; }
-    .pg-new-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
     .pg-new-shot { order: 2; }
-    .pg-report-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
-    .pg-report-inner .pg-h2 { max-width: none; }
-    .pg-install-card { grid-template-columns: 1fr; text-align: center; }
-    .pg-install-copy { display: flex; flex-direction: column; align-items: center; }
+    .pg-new-copy { text-align: center; align-items: center; }
+    .pg-report-inner { grid-template-columns: 1fr; }
+    .pg-report-copy { text-align: center; align-items: center; }
+    .pg-report-copy .pg-h2 { max-width: none; }
+    .pg-install-card { text-align: center; }
+    .pg-install-copy { align-items: center; }
+    .pg-link { align-self: center; }
     .pg-h2 { max-width: none; }
     .pg-reqs li { text-align: left; }
   }
-  @media (max-width: 560px) {
-    .pg-caps-grid { grid-template-columns: 1fr; }
-  }
 
   @media (prefers-reduced-motion: reduce) {
-    .pg-rise { animation: none; opacity: 1; transform: none; }
-    .pg-btn, .pg-btn-ghost { transition: none; }
+    .pg-btn, .pg-btn-ghost, .pg-by, .pg-foot-links a { transition: none; }
   }
 </style>

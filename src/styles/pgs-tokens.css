@@ -1,0 +1,56 @@
+/* Pretty Good Software design tokens.
+   Brought in from Documents/Tom/PGS/Brand/design-system/tokens/*.css.
+   Light + "coaching" product scope only — this site never renders dark mode. */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  /* Paper */
+  --paper: #f3ebda;
+  --paper-warm: #f6efe0;
+  --paper-lit: #fdf7ec;
+  /* Ink (text) */
+  --ink: #241e1a;
+  --ink-muted: #6b5f55;
+  --ink-muted-soft: #8c8074;
+  /* Rules */
+  --rule: #dcceb6;
+  --rule-firm: #c7b79e;
+  /* Studio inks */
+  --grape: #4b3a8c;
+  --grape-lit: #6e5eab;
+  --lilac: #c4b6ee;
+
+  /* Product ink: Pretty Good Video Coaching */
+  --teal: #0e8c86;
+  --teal-deep: #0a6e69;
+  --teal-soft: #bfe3dc;
+  --overprint-teal: #04204a;
+
+  /* Type */
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', sans-serif;
+  --font-body: 'Newsreader', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Space (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* Radii */
+  --radius-xs: 2px;
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-phone: 44px;
+
+  --content-max: 1180px;
+  --dot-grid-size: 18px;
+}
