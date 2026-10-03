@@ -1,21 +1,24 @@
 /* Pretty Good Software design tokens.
    Brought in from Documents/Tom/PGS/Brand/design-system/tokens/*.css.
-   Light + "coaching" product scope only — this site never renders dark mode. */
+   Light + "coaching" product scope only — this site never renders dark mode.
+   Trial of the newsprint paper (cool grey-white ground, re-tuned muted ink and
+   rules) and the Familjen Grotesk / Petrona / Azeret Mono type family, carried
+   over from thomashorn.info. */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400..700&family=Petrona:ital,wght@0,300..600;1,300..500&family=Azeret+Mono:wght@400;500&display=swap');
 
 :root {
   /* Paper */
-  --paper: #f3ebda;
-  --paper-warm: #f6efe0;
-  --paper-lit: #fdf7ec;
+  --paper: #ecebe5;
+  --paper-warm: #f3f2ed;
+  --paper-lit: #f6f5f1;
   /* Ink (text) */
   --ink: #241e1a;
-  --ink-muted: #6b5f55;
-  --ink-muted-soft: #8c8074;
+  --ink-muted: #5f5a53;
+  --ink-muted-soft: #6e6960;
   /* Rules */
-  --rule: #dcceb6;
-  --rule-firm: #c7b79e;
+  --rule: #c9c3b8;
+  --rule-firm: #b5afa3;
   /* Studio inks */
   --grape: #4b3a8c;
   --grape-lit: #6e5eab;
@@ -28,9 +31,9 @@
   --overprint-teal: #04204a;
 
   /* Type */
-  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', sans-serif;
-  --font-body: 'Newsreader', Georgia, serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-display: 'Familjen Grotesk', 'Helvetica Neue', sans-serif;
+  --font-body: 'Petrona', Georgia, serif;
+  --font-mono: 'Azeret Mono', ui-monospace, monospace;
 
   /* Space (4px base) */
   --space-1: 4px;
