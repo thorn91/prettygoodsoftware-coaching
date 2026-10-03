@@ -1,0 +1,3 @@
+/* Tailwind's base layer (Preflight). Previously injected on every page by
+   @astrojs/tailwind; the site uses no utility classes, so only the base. */
+@tailwind base;
