@@ -156,7 +156,7 @@ const icon = (name: string) =>
     <!-- ============ HERO ============ -->
     <section class="pg-hero">
       <div class="pg-hero-inner">
-        <div class="pg-hero-copy">
+        <div class="pg-hero-copy pg-clear">
           <p class="pg-eyebrow">TestFlight beta · iPhone · iOS&nbsp;17+</p>
           <h1 class="pg-h1">Pretty Good<br />Video Coaching</h1>
           <p class="pg-lede">Frame-accurate movement analysis for clinicians.</p>
@@ -238,22 +238,29 @@ const icon = (name: string) =>
 
     <!-- ============ CAPABILITIES ============ -->
     <section class="pg-caps">
-      <p class="pg-eyebrow">Around the measurement</p>
-      <h2 class="pg-h2 pg-caps-h2">The tools a movement assessment needs.</h2>
-      <div class="pg-caps-grid">
-        {capabilities.map((c) => (
-          <article class="pg-cap">
-            <span class="pg-cap-ico" set:html={icon(c.icon)} />
-            <h3 class="pg-cap-t">{c.title}</h3>
-            <p class="pg-cap-b">{c.body}</p>
-          </article>
-        ))}
+      <div class="pg-caps-head pg-clear">
+        <p class="pg-eyebrow">Around the measurement</p>
+        <h2 class="pg-h2 pg-caps-h2">The tools a movement assessment needs.</h2>
+      </div>
+      <div class="pg-caps-sheet">
+        <div class="pg-caps-grid">
+          {capabilities.map((c, i) => (
+            <article class="pg-cap">
+              <div class="pg-cap-top">
+                <span class="pg-cap-ico" set:html={icon(c.icon)} />
+                <span class="pg-cap-n">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h3 class="pg-cap-t">{c.title}</h3>
+              <p class="pg-cap-b">{c.body}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
 
     <!-- ============ ON YOUR IPHONE ============ -->
     <section class="pg-screens">
-      <div class="pg-screens-head">
+      <div class="pg-screens-head pg-clear">
         <p class="pg-eyebrow">On your iPhone</p>
         <h2 class="pg-h2">Every clip, filed under the right client.</h2>
         <p class="pg-screens-sub">
@@ -378,6 +385,11 @@ const icon = (name: string) =>
     background-image: radial-gradient(circle, var(--rule-firm) 1px, transparent 1.3px);
     background-size: var(--dot-grid-size) var(--dot-grid-size);
     pointer-events: none;
+  }
+  .pg-clear {
+    position: relative;
+    background: var(--paper);
+    box-shadow: 0 0 0 20px var(--paper), 0 0 36px 32px var(--paper);
   }
 
   /* ---- shared type ---- */
@@ -597,25 +609,39 @@ const icon = (name: string) =>
     margin: 0 auto;
     padding: 104px 32px 88px;
   }
+  .pg-caps-head { width: fit-content; }
   .pg-caps-h2 { max-width: 18ch; }
+  .pg-caps-sheet {
+    position: relative;
+    margin-top: var(--space-7);
+    background: var(--paper-lit);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--ink);
+    border-radius: 0 0 var(--radius-m) var(--radius-m);
+    overflow: hidden;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(36, 30, 26, 0.35);
+  }
   .pg-caps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-    gap: 0 40px;
-    margin-top: var(--space-7);
-    border-top: 1.5px solid var(--ink);
+    margin: 0 -1px -1px 0;
   }
   .pg-cap {
-    padding: 28px 0 32px;
+    padding: 32px 32px 36px;
+    border-right: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: background-color 160ms ease;
   }
+  .pg-cap:hover { background: var(--paper); }
+  .pg-cap-top { display: flex; align-items: center; justify-content: space-between; }
   .pg-cap-ico { display: block; color: var(--teal-deep); }
   .pg-cap-ico :global(svg) { width: 28px; height: 28px; }
-  .pg-cap-t { font: 600 20px/1.25 var(--font-display); margin: 6px 0 0; }
-  .pg-cap-b { font: 400 17px/1.55 var(--font-body); color: var(--ink-muted); margin: 0; text-wrap: pretty; }
+  .pg-cap-n { font: 500 12px/1 var(--font-mono); letter-spacing: 0.12em; color: var(--teal-deep); }
+  .pg-cap-t { font: 600 20px/1.25 var(--font-display); letter-spacing: -0.01em; margin: 10px 0 0; }
+  .pg-cap-b { font: 400 17px/1.6 var(--font-body); color: color-mix(in srgb, var(--ink) 86%, var(--paper-lit)); margin: 0; text-wrap: pretty; }
 
   /* ---- on your iphone ---- */
   .pg-screens {
@@ -841,6 +867,6 @@ const icon = (name: string) =>
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pg-btn, .pg-btn-ghost, .pg-by, .pg-foot-links a { transition: none; }
+    .pg-btn, .pg-btn-ghost, .pg-by, .pg-foot-links a, .pg-cap { transition: none; }
   }
 </style>
