@@ -1,8 +1,5 @@
-# Pretty Good Video Coaching site
+# prettygoodsoftware-coaching: hosting only
 
-The product site for the Video Coaching iPhone app. Astro; a push to main deploys it.
+Nothing here to edit. This repo serves coaching.prettygoodsoftware.llc from its `gh-pages` branch, which releases from `thorn91/sites` write. The site's code lives in `thorn91/sites` (`~/Source/sites`, `apps/coaching`); work there, and read its `CLAUDE.md`.
 
-@~/Documents/Tom/PGS/Studio.md
-
-This site carries the product ink (teal) under `data-product="coaching"`. Screenshots come from the real app;
-the report page images are real exports rendered by the app.
+Never delete this repo or its `gh-pages` branch, and never change its Pages settings: the site would go offline.
